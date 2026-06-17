@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
   - name: kiada
-    image: selgho/kiada:0.2
+    image: selgho/kiada:0.3
     ports:
     - name: http
       containerPort: 8080

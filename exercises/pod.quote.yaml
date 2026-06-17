@@ -19,5 +19,11 @@ spec:
           - |
             apk add fortune && \
             curl -O https://luksa.github.io/kiada/book-quotes.txt && \
-            curl -O https://luksa.github.io/kiada/book-quotes.txt.data && \
-            fortune book-quotes.txt ? /usr/share/nginx/html/quote
+            curl -O https://luksa.github.io/kiada/book-quotes.txt.dat && \
+            fortune book-quotes.txt > /usr/share/nginx/html/quote
+      preStop:
+        exec:
+          command:
+          - nginx
+          - -s
+          - quit
