@@ -4,23 +4,24 @@ metadata:
   name: quote
   namespace: kiada
 spec:
+  volumes:
+  - name: shared
+    emptyDir: {}
   containers:
+  - name: quote-writer
+    image: selgho/quote-writer:0.1.1
+    volumeMounts:
+    - name: shared
+      mountPath: /var/local/output
   - name: nginx
     image: nginx:alpine
     ports:
     - name: http
       containerPort: 80
+    volumeMounts:
+    - name: shared
+      mountPath: /usr/share/nginx/html
     lifecycle:
-      postStart:
-        exec:
-          command:
-          - sh
-          - -c
-          - |
-            apk add fortune && \
-            curl -O https://luksa.github.io/kiada/book-quotes.txt && \
-            curl -O https://luksa.github.io/kiada/book-quotes.txt.dat && \
-            fortune book-quotes.txt > /usr/share/nginx/html/quote
       preStop:
         exec:
           command:
